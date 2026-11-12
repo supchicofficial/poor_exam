@@ -1,38 +1,34 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from .models import Author, Book
+
 
 def index(request):
     return render(request, 'index.html')
 
+def author_list(request):
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        if action == 'create':
+            name = request.POST.get('name')
+            Author.objects.create(name=name)
+        elif action == 'update':
+            author_id = request.POST.get('author_id')
+            author = Author.objects.get(id=author_id)
+            author.name = request.POST.get('name')
+            author.save()
+        elif action == 'delete':
+            author_id = request.POST.get('author_id')
+            author = Author.objects.get(id=author_id)
+            author.delete()
+        return redirect('author_list')
+    authors = Author.objects.all()
+    return render(request, 'author.html', {
+        'authors': authors
+    })
+
 
 def book_list(request):
-    title = "Список книг"
-    context = {
-        'title': title
-    }
-    post = request.POST.get('post')
-    if post:
-        return redirect('book_list')
-    return render(request, 'book_list.html', context)
-
-
-def author_list(request):
-    title = "Список авторов"
-    context = {
-        'title': title
-    }
-    post = request.POST.get('post')
-    if post:
-        return redirect('author_list')
-    return render(request, 'author_list.html', context)
-
-
-def order_list(request):
-    title = "Список заказов"
-    context = {
-        'title': title
-    }
-    post = request.POST.get('post')
-    if post:
-        return redirect('order_list')
-    return render(request, 'order_list.html', context)
+    books = Book.objects.all()
+    return render(request, 'book.html', {
+        'books': books
+    })

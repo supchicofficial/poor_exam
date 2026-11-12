@@ -1,12 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CRUD Authors</title>
 </head>
 <body>
-    
+    <h1>Управление авторами</h1>
+    <h2>Добавить автора</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="create">
+        <input type="text" name="name" placeholder="Имя автора" required>
+        <button type="submit">Добавить</button>
+    </form>
+    <hr>
+    <h2>Список авторов</h2>
+    {% for author in authors %}
+        <div style="border:1px solid black; padding:15px; margin:10px 0;">
+            <h3>{{ author.name }}</h3>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update">
+                <input type="hidden" name="author_id" value="{{ author.id }}">
+                <input type="text" name="name" value="{{ author.name }}" required>
+                <button type="submit">Изменить</button>
+            </form>
+            <br>
+            <form method="POST" onsubmit="return confirm('Удалить автора?')">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="author_id" value="{{ author.id }}">
+                <button type="submit">Удалить</button>
+            </form>
+        </div>
+    <a href="/">На главную</a>
 </body>
 </html>

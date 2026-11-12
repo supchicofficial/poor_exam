@@ -1,16 +1,24 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Список заказов</title>
 </head>
 <body>
+    <ul>
+        <li><a href="{% url 'book_list' %}">Books</a></li>
+        <li><a href="{% url 'author_list' %}">Authors</a></li>
+        <li><a href="{% url 'order_list' %}">Orders</a></li>
+    </ul>
     <h1>Список заказов</h1>
     <ul>
         {% for order in orders %}
-            <li>{{ order.title }} - {{ order.author.name }}</li>
+            <li>
+                {{ order.full_name }} -
+                {{ order.number_phone }} -
+                {{ order.book.title }}
+            </li>
         {% endfor %}
     </ul>
 </body>

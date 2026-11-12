@@ -1,4 +1,4 @@
-{% static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +7,11 @@
     <title>Document</title>
 </head>
 <body>
+    <ul>
+        <li><a href="{% url 'book_list' %}">Books</a></li>
+        <li><a href="{% url 'author_list' %}">Authors</a></li>
+        <li><a href="{% url 'order_list' %}">Orders</a></li>
+    </ul>
     <h1>Добро пожаловать!</h1>
     <h1>Список книг</h1>
     <ul>

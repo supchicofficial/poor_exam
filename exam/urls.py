@@ -1,9 +1,8 @@
-from .views import *
-import os
 from django.urls import path
+from .views import *
 
 urlpatterns = [
+    path('', index, name='index'),
+    path('authors/', author_list, name='authors'),
     path('books/', book_list, name='book_list'),
-    path('authors/', author_list, name='author_list'),
-    path('orders/', order_list, name='order_list'),
 ]
